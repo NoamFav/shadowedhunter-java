@@ -19,7 +19,7 @@ public class FontLoader {
             customFont =
                     Font.createFont(
                                     Font.TRUETYPE_FONT,
-                                    FontLoader.class.getResourceAsStream("/Dungeon.TTF"))
+                                    FontLoader.class.getResourceAsStream("/fonts/Dungeon.TTF"))
                             .deriveFont(40.0f);
 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

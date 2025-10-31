@@ -39,7 +39,7 @@ public class GameWindow extends JFrame {
         setVisible(true);
 
         // Start background music
-        AudioManager.getInstance().playBackgroundMusic("ThemeMusic.mp3", 20f);
+        AudioManager.getInstance().playBackgroundMusic("audio/ThemeMusic.mp3", 20f);
 
         // Start timer
         int delay = Constants.TIMER_DELAY_MS;

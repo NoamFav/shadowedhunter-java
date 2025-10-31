@@ -24,7 +24,7 @@ public class MapRenderer {
         }
 
         // Load player icon
-        playerIcon = ResourceLoader.loadImage("/icon.png");
+        playerIcon = ResourceLoader.loadImage("/images/icon.png");
 
         // Initialize icon position based on screen size
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

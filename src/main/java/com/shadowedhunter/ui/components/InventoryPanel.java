@@ -18,10 +18,10 @@ public class InventoryPanel {
         this.engine = engine;
 
         // Load item images
-        keyImage = ResourceLoader.loadImage("/inventoryItems/key.png");
-        healthPotionImage = ResourceLoader.loadImage("/inventoryItems/healthPotion.png");
-        swordImage = ResourceLoader.loadImage("/inventoryItems/Sword.png");
-        shieldImage = ResourceLoader.loadImage("/inventoryItems/Shield.png");
+        keyImage = ResourceLoader.loadImage("/images/inventoryItems/key.png");
+        healthPotionImage = ResourceLoader.loadImage("/images/inventoryItems/healthPotion.png");
+        swordImage = ResourceLoader.loadImage("/images/inventoryItems/Sword.png");
+        shieldImage = ResourceLoader.loadImage("/images/inventoryItems/Shield.png");
     }
 
     public void render(Graphics2D g2d) {

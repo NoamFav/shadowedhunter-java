@@ -37,8 +37,8 @@ public class GamePanel extends JPanel {
         setOpaque(false);
 
         // Load images
-        backgroundImage = ResourceLoader.loadImage("/BackgroundGame.png");
-        cheatSheetImage = ResourceLoader.loadImage("/CheatSheet.png");
+        backgroundImage = ResourceLoader.loadImage("/images/BackgroundGame.png");
+        cheatSheetImage = ResourceLoader.loadImage("/images/CheatSheet.png");
 
         // Create components
         mapRenderer = new MapRenderer(engine);

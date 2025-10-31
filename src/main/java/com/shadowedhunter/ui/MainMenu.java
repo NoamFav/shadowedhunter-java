@@ -21,8 +21,8 @@ public class MainMenu extends JFrame {
 
     public MainMenu() {
         customFont = FontLoader.loadCustomFont();
-        backgroundImage = ResourceLoader.loadImage("/ground.jpg");
-        titleImage = ResourceLoader.loadImage("/Title.png");
+        backgroundImage = ResourceLoader.loadImage("/images/ground.jpg");
+        titleImage = ResourceLoader.loadImage("/images/Title.png");
 
         setTitle("Shadowed Hunter");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,7 +42,7 @@ public class MainMenu extends JFrame {
         add(imagePanel, BorderLayout.CENTER);
 
         // Play menu music
-        AudioManager.getInstance().playMenuMusic("VoidBgMusic.mp3", 20f);
+        AudioManager.getInstance().playMenuMusic("audio/VoidBgMusic.mp3", 20f);
 
         setVisible(true);
     }
