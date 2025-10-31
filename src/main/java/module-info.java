@@ -9,5 +9,5 @@ module com.ShadowedHunter {
     requires ch.qos.logback.core;
 
     // Exporting your package
-    exports com.ShadowedHunter; // Export main package for use by other modules
+    exports com.shadowedhunter; // Export main package for use by other modules
 }
