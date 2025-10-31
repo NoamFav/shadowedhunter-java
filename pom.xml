@@ -59,6 +59,15 @@
                     <target>22</target>
                 </configuration>
             </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <version>3.1.0</version>
+              <configuration>
+                <mainClass>${main.class}</mainClass>
+                <classpathScope>runtime</classpathScope>
+              </configuration>
+            </plugin>
 
             <!-- Maven Dependency Plugin -->
             <plugin>
@@ -114,7 +123,7 @@
                         <id>run-app</id>
                         <phase>none</phase>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>java</goal>
                         </goals>
                         <configuration>
                             <mainClass>${main.class}</mainClass>
