@@ -8,11 +8,10 @@ import com.shadowedhunter.world.Tile;
 import com.shadowedhunter.world.tiles.LockedDoorTile;
 
 public class UnlockDoorCommand implements Command {
-    private final GameEngine engine;
+
     private final Direction direction;
 
     public UnlockDoorCommand(GameEngine engine, String directionStr) {
-        this.engine = engine;
         this.direction = Direction.fromString(directionStr);
     }
 

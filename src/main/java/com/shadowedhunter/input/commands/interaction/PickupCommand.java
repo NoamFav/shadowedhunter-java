@@ -7,11 +7,8 @@ import com.shadowedhunter.world.Tile;
 import com.shadowedhunter.world.tiles.ItemTile;
 
 public class PickupCommand implements Command {
-    private final GameEngine engine;
 
-    public PickupCommand(GameEngine engine) {
-        this.engine = engine;
-    }
+    public PickupCommand(GameEngine engine) {}
 
     @Override
     public void execute(GameEngine engine) {
@@ -33,10 +30,10 @@ public class PickupCommand implements Command {
                         switch (itemType) {
                             case KEY ->
                                     "You picked up an old rusty key, it can be used to open locked"
-                                        + " door.";
+                                            + " door.";
                             case HEALTH_POTION ->
                                     "You picked up a potion of Health, when used it will restore"
-                                        + " all your life, use wisely.";
+                                            + " all your life, use wisely.";
                             default -> "You picked up an item.";
                         };
 

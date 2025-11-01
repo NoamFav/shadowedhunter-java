@@ -1,10 +1,7 @@
 package com.shadowedhunter.audio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AudioManager {
-    private static final Logger logger = LoggerFactory.getLogger(AudioManager.class);
     private static AudioManager instance;
     private MusicPlayer backgroundMusic;
     private MusicPlayer menuMusic;

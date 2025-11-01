@@ -6,11 +6,8 @@ import com.shadowedhunter.util.Direction;
 import com.shadowedhunter.world.Tile;
 
 public class LookCommand implements Command {
-    private final GameEngine engine;
 
-    public LookCommand(GameEngine engine) {
-        this.engine = engine;
-    }
+    public LookCommand(GameEngine engine) {}
 
     @Override
     public void execute(GameEngine engine) {

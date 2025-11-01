@@ -1,10 +1,6 @@
 package com.shadowedhunter.world;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class World {
-    private static final Logger logger = LoggerFactory.getLogger(World.class);
     private final Floor[] floors;
     private int currentFloorIndex;
 

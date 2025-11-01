@@ -8,11 +8,10 @@ import com.shadowedhunter.world.tiles.DoorTile;
 import com.shadowedhunter.world.tiles.SecretDoorTile;
 
 public class OpenDoorCommand implements Command {
-    private final GameEngine engine;
+
     private final Direction direction;
 
     public OpenDoorCommand(GameEngine engine, String directionStr) {
-        this.engine = engine;
         this.direction = Direction.fromString(directionStr);
     }
 
