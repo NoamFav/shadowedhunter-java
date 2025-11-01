@@ -17,13 +17,13 @@ public class FogOfWar {
 
         // 2) Fill it fully black (opaque)
         fg.setComposite(AlphaComposite.SrcOver);
-        fg.setColor(new Color(0, 0, 0, 220)); // a bit see-through if you like; 255 for solid
+        fg.setColor(new Color(0, 0, 0, 255)); // a bit see-through if you like; 255 for solid
         fg.fillRect(0, 0, mapW, mapH);
 
         // 3) Punch a soft hole at the player position (relative to map area)
         int cx = playerX - mapX;
         int cy = playerY - mapY;
-        float radius = Math.max(mapW, mapH) / 10.0f; // tweak as you like
+        float radius = Math.max(mapW, mapH) / 50.0f; // tweak as you like
 
         // Use DST_OUT so opaque at center removes fog; edge alpha keeps fog
         fg.setComposite(AlphaComposite.DstOut);

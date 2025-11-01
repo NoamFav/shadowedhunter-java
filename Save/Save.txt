@@ -20,11 +20,11 @@ x;;;;x;9;;9;x;x;;1;;;;x;x;3;;3;x;x;x;x;x;x;x;x;x;40;;;;;x;x;x;x;x;x;;53;;x;x;;x;
 x;;;;x;;9;;x;x;x;;1;;x;x;x;;3;;x;;;;;;;;x;;40;40;;k;x;;;;x;x;x;;x;x;x;;;;x;;x;;71;;t;;x;;80;;80;;x;;x
 x;;;;x;x;x;p;x;x;x;t;x;x;x;x;x;x;x;d;x;d;x;;x;x;x;a;x;d;x;a;x;x;x;;;;x;x;x;d;x;x;x;x;x;x;x;;x;;;71;x;;x;;;80;;;x;;x
 x;;;;d;;26;26;x;;7;;x;;k;;x;sw;x;;47;;x;wb;x;pa;x;;79;;x;;42;;x;;;;x;;;;x;x;x;x;x;;;;x;71;;;x;fp;x;;;80;;;x;;x
-x;x;x;t;x;26;;26;x;7;;7;x;;;6;x;;x;47;;47;x;;x;;x;79;;79;x;42;k;42;x;17;;;x;fp;x;x;x;x;x;x;x;;x;x;x;a;x;x;x;;x;x;x;a;x;x;x;wb;x
+x;x;x;d;x;26;;26;x;7;;7;x;;;6;x;;x;47;;47;x;;x;;x;79;;79;x;42;k;42;x;17;;;x;fp;x;x;x;x;x;x;x;;x;x;x;a;x;x;x;;x;x;x;a;x;x;x;wb;x
 x;;54;54;p;26;26;;d;;7;;x;6;6;;l;;x;;47;;x;;;;d;;79;;x;;42;;d;;17;17;x;;;;;;;sp;;;x;he;;18;x;;;;x;;;32;x;;;;x
 x;;;54;x;x;x;x;x;x;x;x;x;a;x;s;x;x;x;x;x;t;x;;x;x;x;x;x;x;x;42;;42;x;x;x;a;x;x;x;;x;x;x;x;x;x;x;;;;x;;x;;x;;;;x;;x;x;x
 x;;54;54;p;22;;;;;x;he;;;x;;45;;x;;85;;x;;x;;;;x;x;x;;42;;d;;x;88;;;x;;;;;;;pa;x;;;;x;;x;;x;;;;x;;;;x
-x;x;x;t;x;;;;;;x;x;x;x;x;45;;;x;;;85;x;;x;;;25;x;x;x;d;x;x;x;;x;88;;88;x;x;x;x;x;x;x;x;x;18;;18;x;;x;;x;x;x;x;x;x;x;;x
+x;x;x;d;x;;;;;;x;x;x;x;x;45;;;x;;;85;x;;x;;;25;x;x;x;d;x;x;x;;x;88;;88;x;x;x;x;x;x;x;x;x;18;;18;x;;x;;x;x;x;x;x;x;x;;x
 x;;52;;x;;;;;;x;;26;;s;;45;;x;85;;;x;;x;;25;;d;;x;;;pa;;;x;;88;;t;;;;;;;;t;;18;;x;pa;x;;;;;sw;;;x;;x
 x;;;52;x;;k;;;;x;;;26;x;45;;;x;a;x;x;x;;x;x;x;x;x;d;x;x;x;x;x;;x;s;x;x;x;x;x;x;x;x;x;x;x;s;x;d;x;x;x;x;x;x;x;x;x;;x;;x
 x;;52;;x;;;;;22;p;26;;;x;;;;x;76;;76;p;;sp;;;;x;;57;;x;;;;;;x;;;;x;;;;;;x;;x;;46;46;p;30;30;;d;;x;;;;x
@@ -208,7 +208,7 @@ x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;x;
 
 3,21
 Health:100
-Lives:0
+Lives:1
 Keys:0
 HealthPotions:0
 MapIndex:0
