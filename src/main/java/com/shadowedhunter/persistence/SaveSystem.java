@@ -121,6 +121,7 @@ public class SaveSystem {
                 int floorIndex = Integer.parseInt(line.split(":")[1]);
                 engine.getWorld().switchFloor(floorIndex);
             }
+            engine.syncIconToPlayerPosition();
 
             logger.info("Game loaded successfully from {}", fileName);
 

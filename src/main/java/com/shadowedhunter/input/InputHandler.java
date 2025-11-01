@@ -59,8 +59,23 @@ public class InputHandler {
 
     public void handleInput(String input) {
         String normalized = input.trim().toLowerCase();
-        Command command = commands.get(normalized);
 
+        String[] parts = normalized.split("\\s+");
+        if (parts.length == 2) {
+            Command base = commands.get(parts[0]);
+            if (base instanceof MoveCommand moveCmd) {
+                try {
+                    int steps = Integer.parseInt(parts[1]);
+                    if (steps > 0) {
+                        moveCmd.execute(engine, steps);
+                        return;
+                    }
+                } catch (NumberFormatException ignored) {
+                }
+            }
+        }
+
+        Command command = commands.get(normalized);
         if (command != null) {
             command.execute(engine);
         } else {

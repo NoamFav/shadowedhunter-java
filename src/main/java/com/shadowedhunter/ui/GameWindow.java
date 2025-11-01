@@ -3,6 +3,7 @@ package com.shadowedhunter.ui;
 import com.shadowedhunter.audio.AudioManager;
 import com.shadowedhunter.core.GameEngine;
 import com.shadowedhunter.util.Constants;
+import com.shadowedhunter.util.Direction;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -64,6 +65,16 @@ public class GameWindow extends JFrame {
 
     public void showCheatSheet() {
         gamePanel.showCheatSheet();
+    }
+
+    public void moveIcon(Direction dir, int tiles) {
+        if (gamePanel != null) {
+            gamePanel.moveIcon(dir, tiles);
+        }
+    }
+
+    public void setIconPosition(int x, int y) {
+        if (gamePanel != null) gamePanel.setIconPosition(x, y);
     }
 
     @Override

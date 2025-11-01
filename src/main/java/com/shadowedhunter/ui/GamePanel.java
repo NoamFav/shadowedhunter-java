@@ -3,6 +3,7 @@ package com.shadowedhunter.ui;
 import com.shadowedhunter.core.GameEngine;
 import com.shadowedhunter.ui.components.*;
 import com.shadowedhunter.util.Constants;
+import com.shadowedhunter.util.Direction;
 import com.shadowedhunter.util.FontLoader;
 import com.shadowedhunter.util.ResourceLoader;
 
@@ -150,11 +151,10 @@ public class GamePanel extends JPanel {
         // Draw map
         mapRenderer.render(g2d, mapX, mapY, mapWidth, mapHeight);
 
-        // Draw fog of war
-        var _ = engine.getGameState().getPlayer();
+        // Fog centered on the icon position (already in panel coords)
         int iconX = mapRenderer.getIconX();
         int iconY = mapRenderer.getIconY();
-        fogOfWar.render(g2d, getWidth(), getHeight(), iconX + 4, iconY + 4);
+        fogOfWar.render(g2d, mapX, mapY, mapWidth, mapHeight, iconX + 4, iconY + 4);
 
         // Draw UI elements
         healthBar.render(g2d);
@@ -183,5 +183,20 @@ public class GamePanel extends JPanel {
             g2d.drawImage(cheatSheetImage, mapX, mapY, mapWidth, mapHeight, this);
             g2d.setClip(null);
         }
+    }
+
+    public void moveIcon(Direction dir, int tiles) {
+        int step =
+                com.shadowedhunter.util.Constants.TILE_SIZE
+                        * tiles; // reuse your TILE_SIZE as pixel step
+        int dx = dir.getDx() * step;
+        int dy = dir.getDy() * step;
+        mapRenderer.moveIcon(dx, dy);
+        repaint();
+    }
+
+    public void setIconPosition(int x, int y) {
+        mapRenderer.setIconPosition(x, y);
+        repaint();
     }
 }

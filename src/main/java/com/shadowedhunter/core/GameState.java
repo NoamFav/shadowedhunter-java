@@ -2,6 +2,7 @@ package com.shadowedhunter.core;
 
 import com.shadowedhunter.entity.Player;
 import com.shadowedhunter.inventory.Inventory;
+import com.shadowedhunter.util.Constants;
 
 public class GameState {
     private Player player;
@@ -18,17 +19,23 @@ public class GameState {
     }
 
     public void initialize() {
-        this.player = new Player(1, 17);
-        this.health = 100;
+        this.player = new Player(Constants.START_X, Constants.START_Y);
+        this.health = Constants.MAX_HEALTH;
         this.inventory.clear();
         this.gameStarted = true;
         stats.reset();
+
+        // sync icon
+        GameEngine.getInstance().resetIconToStart();
     }
 
     public void handleDeath() {
         stats.incrementDeaths();
-        health = 100;
-        player.setPosition(1, 17);
+        health = Constants.MAX_HEALTH;
+        player.setPosition(Constants.START_X, Constants.START_Y);
+
+        // sync icon
+        GameEngine.getInstance().resetIconToStart();
     }
 
     public void setHealth(int health) {

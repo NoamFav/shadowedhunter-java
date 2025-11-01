@@ -29,6 +29,7 @@ public class ClimbStairsCommand implements Command {
 
             if (tile instanceof StairsTile stairs && stairs.goesUp() == goingUp) {
                 player.setPosition(checkX, checkY);
+                engine.moveIcon(dir, 1);
                 if (goingUp) {
                     engine.getWorld().ascendFloor();
                     engine.displayMessage("Going up the stairs");

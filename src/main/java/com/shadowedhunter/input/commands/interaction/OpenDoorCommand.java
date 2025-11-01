@@ -37,6 +37,7 @@ public class OpenDoorCommand implements Command {
                 engine.displayMessage("Opening the door");
                 player.move(direction);
                 player.move(direction);
+                engine.moveIcon(direction, 2);
                 engine.refreshDisplay();
             }
         } else if (tile instanceof SecretDoorTile) {
@@ -45,6 +46,7 @@ public class OpenDoorCommand implements Command {
                             + "the wall moves, it was a secret door!!");
             player.move(direction);
             player.move(direction);
+            engine.moveIcon(direction, 2);
             engine.refreshDisplay();
         } else {
             engine.displayMessage("No door here");
@@ -55,17 +57,21 @@ public class OpenDoorCommand implements Command {
         // Trapped door logic
         java.util.Random rand = new java.util.Random();
         double chance = rand.nextDouble();
-
+        var player = engine.getGameState().getPlayer();
         if (chance <= 0.50 || engine.getGameState().getHealth() <= 50) {
             engine.displayMessage(
                     "When opening the door, a mechanism triggers, and the door "
                             + "blows up in your face. You died");
             engine.getGameState().handleDeath();
+            engine.getWorld().getCurrentFloor().setTile(x, y, new DoorTile(x, y, false));
         } else {
             engine.displayMessage(
                     "When opening the door, a mechanism triggers, your reflex "
                             + "saves you, you jump back avoiding the blast. -50HP");
             engine.getGameState().damagePlayer(50);
+            player.move(direction);
+            player.move(direction);
+            engine.moveIcon(direction, 2);
             // Convert trap door to regular door
             engine.getWorld().getCurrentFloor().setTile(x, y, new DoorTile(x, y, false));
         }
