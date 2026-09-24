@@ -52,7 +52,6 @@ public class MoveCommand implements Command {
             }
 
             player.move(direction);
-            engine.moveIcon(direction, 1);
             moved++;
 
             // A trap or a lore room interrupts the walk and keeps its message on screen

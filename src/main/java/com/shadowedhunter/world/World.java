@@ -6,6 +6,11 @@ public class World {
 
     public World() {
         this.floors = new Floor[4];
+        reset();
+    }
+
+    /** Reloads every floor from its map file, undoing triggered traps, picked items, etc. */
+    public void reset() {
         loadAllFloors();
         this.currentFloorIndex = 0;
     }

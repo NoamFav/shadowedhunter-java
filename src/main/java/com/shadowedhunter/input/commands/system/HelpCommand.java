@@ -13,8 +13,6 @@ public class HelpCommand implements Command {
     @Override
     public void execute(GameEngine engine) {
         engine.displayMessage("Showing cheatSheet for 10s");
-        if (engine.getGameWindow() != null) {
-            engine.getGameWindow().showCheatSheet();
-        }
+        engine.showCheatSheet();
     }
 }

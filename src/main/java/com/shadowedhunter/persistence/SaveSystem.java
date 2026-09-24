@@ -13,6 +13,10 @@ public class SaveSystem {
     private static final Logger logger = LoggerFactory.getLogger(SaveSystem.class);
     private static final String SAVE_DIR = "Save/";
 
+    public static boolean hasSave(String fileName) {
+        return new File(SAVE_DIR + fileName).isFile();
+    }
+
     public static void saveGame(GameEngine engine, String fileName) {
         File saveDir = new File(SAVE_DIR);
         if (!saveDir.exists()) {
@@ -121,7 +125,7 @@ public class SaveSystem {
                 int floorIndex = Integer.parseInt(line.split(":")[1]);
                 engine.getWorld().switchFloor(floorIndex);
             }
-            engine.syncIconToPlayerPosition();
+            engine.refreshDisplay();
 
             logger.info("Game loaded successfully from {}", fileName);
 

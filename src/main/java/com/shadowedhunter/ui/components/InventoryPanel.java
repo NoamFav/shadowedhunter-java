@@ -2,97 +2,149 @@ package com.shadowedhunter.ui.components;
 
 import com.shadowedhunter.core.GameEngine;
 import com.shadowedhunter.inventory.ItemType;
-import com.shadowedhunter.util.FontLoader;
 import com.shadowedhunter.util.ResourceLoader;
 
-import java.awt.*;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
+import javafx.css.PseudoClass;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
-public class InventoryPanel {
+import java.util.function.Consumer;
+
+/** What the player carries: consumables with counts, and their equipment. */
+public class InventoryPanel extends VBox {
+    private static final PseudoClass EMPTY = PseudoClass.getPseudoClass("empty");
+    private static final PseudoClass USABLE = PseudoClass.getPseudoClass("usable");
+
     private final GameEngine engine;
-    private final Image keyImage;
-    private final Image healthPotionImage;
-    private final Image swordImage;
-    private final Image shieldImage;
+    private final Slot keys;
+    private final Slot potions;
 
-    public InventoryPanel(GameEngine engine) {
+    /** @param runCommand runs a command as if the player typed it (clicking the potion uses it) */
+    public InventoryPanel(GameEngine engine, Consumer<String> runCommand) {
         this.engine = engine;
+        getStyleClass().addAll("panel", "inventory");
 
-        // Load item images
-        keyImage = ResourceLoader.loadImage("/images/inventoryItems/key.png");
-        healthPotionImage = ResourceLoader.loadImage("/images/inventoryItems/healthPotion.png");
-        swordImage = ResourceLoader.loadImage("/images/inventoryItems/Sword.png");
-        shieldImage = ResourceLoader.loadImage("/images/inventoryItems/Shield.png");
+        Label title = new Label("Inventory");
+        title.getStyleClass().add("panel-title");
+
+        keys =
+                new Slot(
+                        "Rusty key",
+                        "/images/inventoryItems/key.png",
+                        "Opens one locked door, then breaks.\nunlock <direction> -ern door",
+                        false);
+        potions =
+                new Slot(
+                        "Health potion",
+                        "/images/inventoryItems/healthPotion.png",
+                        "Restores all your health.\nClick it, or type: use potion",
+                        false);
+        potions.setOnMouseClicked(
+                e -> {
+                    if (engine.getGameState().getInventory().hasItem(ItemType.HEALTH_POTION)) {
+                        runCommand.accept("use potion");
+                    }
+                });
+        HBox items = new HBox(keys, potions);
+        items.getStyleClass().add("inventory-row");
+
+        Label equippedTitle = new Label("Equipped");
+        equippedTitle.getStyleClass().add("inventory-section");
+        equippedTitle.setMaxWidth(Double.MAX_VALUE);
+        Slot sword =
+                new Slot("Sword", "/images/inventoryItems/Sword.png", "Your trusty blade.", true);
+        Slot shield =
+                new Slot("Shield", "/images/inventoryItems/Shield.png", "Dented, but holding.", true);
+        HBox equipped = new HBox(sword, shield);
+        equipped.getStyleClass().add("inventory-row");
+
+        getChildren().addAll(title, items, equippedTitle, equipped);
+        update();
     }
 
-    public void render(Graphics2D g2d) {
-        Font customFont = FontLoader.loadCustomFont();
-        int screenWidth = g2d.getClipBounds() != null ? g2d.getClipBounds().width : 1920;
-        int screenHeight = g2d.getClipBounds() != null ? g2d.getClipBounds().height : 1080;
-
-        int imageWidth = (int) (screenWidth / 17.1);
-        int imageHeight = (int) (screenHeight / 9.6);
-        int padding = screenWidth / 100;
-        int interPadding = screenWidth / 50;
-        int titleHeight = screenHeight / 20;
-        int barX = (int) (screenWidth * 0.0104);
-        int barY = titleHeight + padding + screenHeight / 15;
-
-        // Get inventory counts
+    public void update() {
         var inventory = engine.getGameState().getInventory();
-        int[] itemCounts = {
-            inventory.getItemCount(ItemType.KEY),
-            inventory.getItemCount(ItemType.HEALTH_POTION),
-            1, // Sword (always have)
-            1 // Shield (always have)
-        };
+        keys.setCount(inventory.getItemCount(ItemType.KEY));
+        potions.setCount(inventory.getItemCount(ItemType.HEALTH_POTION));
+        potions.pseudoClassStateChanged(USABLE, inventory.hasItem(ItemType.HEALTH_POTION));
+    }
 
-        int totalWidth = (padding + imageWidth) * 2 + interPadding;
-        int totalHeight = (padding + imageHeight) * 2 + interPadding + titleHeight;
+    /** One item: its picture in a lit frame, a count badge and its name. */
+    private static class Slot extends VBox {
+        private final StackPane frame;
+        private final Label badge = new Label();
+        private int count = -1;
 
-        float scaleFactor = (float) screenHeight / 1080;
-        int scaleFont = (int) (30 * scaleFactor);
-        g2d.setFont(new Font(customFont.getFontName(), Font.PLAIN, scaleFont));
+        Slot(String name, String imagePath, String description, boolean equipment) {
+            getStyleClass().add("inventory-item");
+            setAlignment(Pos.TOP_CENTER);
 
-        // Draw container
-        g2d.setColor(Color.DARK_GRAY);
-        g2d.fillRoundRect(barX, barY, totalWidth, totalHeight, 20, 20);
-        g2d.setColor(Color.WHITE);
-        g2d.drawRoundRect(barX, barY, totalWidth, totalHeight, 20, 20);
+            ImageView image = new ImageView(ResourceLoader.loadImage(imagePath));
+            image.setPreserveRatio(true);
+            image.setSmooth(true);
 
-        // Draw title
-        g2d.drawString("Inventory:", barX + padding, barY + padding + titleHeight - 35);
+            badge.getStyleClass().add("inventory-badge");
+            StackPane.setAlignment(badge, Pos.TOP_RIGHT);
 
-        // Draw items
-        String[] itemTitles = {"Key", "HP Potion", "Sword", "Shield"};
-        Image[] images = {keyImage, healthPotionImage, swordImage, shieldImage};
+            Region shine = new Region();
+            shine.getStyleClass().add("inventory-shine");
+            shine.setMouseTransparent(true);
 
-        for (int row = 0; row < 2; row++) {
-            for (int col = 0; col < 2; col++) {
-                int index = row * 2 + col;
-                int itemX = barX + padding + (imageWidth + interPadding) * col;
-                int itemY = barY + titleHeight + padding + (imageHeight + interPadding) * row;
-                int scaleFont2 = (int) (23 * scaleFactor);
+            frame = new StackPane(image, shine);
+            frame.getStyleClass().add(equipment ? "equipment-slot" : "inventory-slot");
+            // The frame has a fixed size (see the stylesheet), so the image can follow it
+            image.fitWidthProperty().bind(frame.widthProperty().multiply(0.82));
+            if (!equipment) frame.getChildren().add(badge);
 
-                // Draw item slot
-                g2d.setColor(Color.LIGHT_GRAY);
-                g2d.fillRoundRect(itemX, itemY, imageWidth, imageHeight, 10, 10);
-                g2d.setColor(Color.WHITE);
-                g2d.drawRoundRect(itemX, itemY, imageWidth, imageHeight, 10, 10);
+            Label label = new Label(name);
+            label.getStyleClass().add("inventory-item-name");
 
-                // Draw item title
-                g2d.drawString(itemTitles[index], itemX + padding / 2, itemY);
+            getChildren().addAll(frame, label);
 
-                // Draw item image
-                g2d.drawImage(images[index], itemX, itemY, imageWidth, imageHeight, null);
+            Tooltip tooltip = new Tooltip(name + "\n" + description);
+            tooltip.getStyleClass().add("inventory-tooltip");
+            tooltip.setShowDelay(Duration.millis(250));
+            Tooltip.install(this, tooltip);
+        }
 
-                // Draw count
-                g2d.setFont(new Font(customFont.getFontName(), Font.PLAIN, scaleFont2));
-                g2d.drawString(
-                        String.valueOf(itemCounts[index]),
-                        itemX + imageWidth - padding,
-                        itemY + imageHeight - padding);
-                g2d.setFont(new Font(customFont.getFontName(), Font.PLAIN, scaleFont));
-            }
+        void setCount(int newCount) {
+            boolean gained = count >= 0 && newCount > count;
+            count = newCount;
+            badge.setText(String.valueOf(newCount));
+            badge.setVisible(newCount > 0);
+            pseudoClassStateChanged(EMPTY, newCount == 0);
+            if (gained) celebrate();
+        }
+
+        // A little bounce and flash when something is picked up
+        private void celebrate() {
+            ScaleTransition up = new ScaleTransition(Duration.millis(130), frame);
+            up.setToX(1.15);
+            up.setToY(1.15);
+            ScaleTransition down = new ScaleTransition(Duration.millis(220), frame);
+            down.setToX(1);
+            down.setToY(1);
+            new SequentialTransition(up, down).play();
+
+            Region flash = new Region();
+            flash.getStyleClass().add("inventory-flash");
+            flash.setMouseTransparent(true);
+            frame.getChildren().add(flash);
+            FadeTransition fade = new FadeTransition(Duration.millis(700), flash);
+            fade.setFromValue(1);
+            fade.setToValue(0);
+            fade.setOnFinished(e -> frame.getChildren().remove(flash));
+            fade.play();
         }
     }
 }

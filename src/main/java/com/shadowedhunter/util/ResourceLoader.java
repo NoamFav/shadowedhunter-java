@@ -1,31 +1,40 @@
 package com.shadowedhunter.util;
 
+import javafx.scene.image.Image;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.Image;
 import java.io.InputStream;
-
-import javax.swing.ImageIcon;
+import java.net.URL;
 
 public class ResourceLoader {
     private static final Logger logger = LoggerFactory.getLogger(ResourceLoader.class);
 
-    public static Image loadImage(String path) {
-        try {
-            return new ImageIcon(ResourceLoader.class.getResource(path)).getImage();
-        } catch (Exception e) {
-            logger.error("Failed to load image: " + path, e);
-            return null;
+    // Resources live inside this module, so they must be looked up through a class of the
+    // module with an absolute path; ClassLoader lookups can't see them on the module path.
+    private static String absolute(String path) {
+        return path.startsWith("/") ? path : "/" + path;
+    }
+
+    public static URL getUrl(String path) {
+        URL url = ResourceLoader.class.getResource(absolute(path));
+        if (url == null) {
+            logger.error("Resource not found: {}", path);
         }
+        return url;
+    }
+
+    public static Image loadImage(String path) {
+        URL url = getUrl(path);
+        return url != null ? new Image(url.toExternalForm()) : null;
     }
 
     public static InputStream loadResource(String path) {
-        try {
-            return ResourceLoader.class.getClassLoader().getResourceAsStream(path);
-        } catch (Exception e) {
-            logger.error("Failed to load resource: " + path, e);
-            return null;
+        InputStream is = ResourceLoader.class.getResourceAsStream(absolute(path));
+        if (is == null) {
+            logger.error("Resource not found: {}", path);
         }
+        return is;
     }
 }

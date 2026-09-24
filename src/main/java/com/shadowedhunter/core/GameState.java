@@ -24,9 +24,6 @@ public class GameState {
         this.inventory.clear();
         this.gameStarted = true;
         stats.reset();
-
-        // sync icon
-        GameEngine.getInstance().resetIconToStart();
     }
 
     public void handleDeath() {
@@ -35,9 +32,6 @@ public class GameState {
         player.setPosition(Constants.START_X, Constants.START_Y);
         // The start position only exists on the first floor
         GameEngine.getInstance().getWorld().switchFloor(0);
-
-        // sync icon
-        GameEngine.getInstance().resetIconToStart();
     }
 
     public void setHealth(int health) {

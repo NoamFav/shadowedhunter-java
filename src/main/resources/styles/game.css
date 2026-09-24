@@ -1,0 +1,480 @@
+/*
+ * Shadowed Hunter
+ * Sizes are in em: the root font size follows the window height (30px at 1080p),
+ * so the whole UI scales with the screen.
+ */
+
+.root {
+    -fx-font-family: "Dungeon";
+    -fx-background-color: black;
+
+    -sh-text: #efe6d6;
+    -sh-text-muted: #a89f90;
+    -sh-gold: #c9a86a;
+    -sh-panel: rgba(16, 12, 10, 0.82);
+    -sh-panel-border: rgba(201, 168, 106, 0.45);
+    -sh-button: #471212;
+    -sh-button-hover: #6b1c1c;
+    -sh-button-pressed: #2e0b0b;
+    -sh-danger: #c0392b;
+}
+
+.label {
+    -fx-text-fill: -sh-text;
+}
+
+/* ---------- Main menu ---------- */
+
+.main-menu {
+    -fx-background-image: url("../images/ground.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+.menu-button {
+    -fx-background-color: -sh-button;
+    -fx-background-radius: 0.8em;
+    -fx-border-color: white;
+    -fx-border-radius: 0.8em;
+    -fx-border-width: 0.07em;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-font-size: 2.67em;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 12, 0.2, 0, 3);
+}
+
+.menu-button:hover {
+    -fx-background-color: -sh-button-hover;
+}
+
+.menu-button:pressed {
+    -fx-background-color: -sh-button-pressed;
+}
+
+.menu-button:focused {
+    -fx-border-color: -sh-gold;
+    -fx-border-width: 0.1em;
+}
+
+.menu-button:disabled {
+    -fx-opacity: 0.45;
+}
+
+.menu-button.small {
+    -fx-font-size: 1.33em;
+    -fx-padding: 0.2em 1.2em;
+}
+
+/* ---------- Game screen ---------- */
+
+.game-screen {
+    -fx-background-image: url("../images/BackgroundGame.png");
+    -fx-background-size: cover;
+    -fx-padding: 0.33em 0.33em 0.5em 0.33em;
+    -fx-spacing: 0.33em;
+}
+
+.hud-column {
+    -fx-spacing: 0.6em;
+    -fx-padding: 0.4em;
+}
+
+.panel {
+    -fx-background-color: -sh-panel;
+    -fx-background-radius: 0.5em;
+    -fx-border-color: -sh-panel-border;
+    -fx-border-radius: 0.5em;
+    -fx-padding: 0.35em 0.6em 0.55em 0.6em;
+    -fx-spacing: 0.3em;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.55), 14, 0.2, 0, 3);
+}
+
+.panel-title {
+    -fx-text-fill: -sh-gold;
+}
+
+/* Health */
+
+.health-bar {
+    -fx-min-width: 11.5em;
+}
+
+.health-header {
+    -fx-spacing: 0.3em;
+}
+
+.heart {
+    -fx-shape: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z";
+    -fx-background-color: #c0392b;
+    -fx-min-width: 0.8em;
+    -fx-min-height: 0.72em;
+    -fx-max-width: 0.8em;
+    -fx-max-height: 0.72em;
+    -fx-effect: dropshadow(gaussian, rgba(192, 57, 43, 0.6), 6, 0.3, 0, 0);
+}
+
+.health-value {
+    -fx-text-fill: -sh-text;
+    -fx-font-size: 1.1em;
+}
+
+.health-bar:warning .health-value {
+    -fx-text-fill: #e8a33d;
+}
+
+.health-bar:critical .health-value {
+    -fx-text-fill: #ff5a4a;
+}
+
+.health-track {
+    -fx-background-color: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(40, 30, 25, 0.75));
+    -fx-background-radius: 0.3em;
+    -fx-border-color: rgba(255, 255, 255, 0.18);
+    -fx-border-radius: 0.3em;
+    -fx-min-height: 1.1em;
+    -fx-pref-height: 1.1em;
+}
+
+.health-fill {
+    /* Top highlight over a solid body, so it reads like a glass tube */
+    -fx-background-color:
+        linear-gradient(to bottom, #4fb05a, #2e7d32),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent 55%);
+    -fx-background-radius: 0.3em;
+    -fx-background-insets: 1, 1 1 0.55em 1;
+}
+
+.health-bar:warning .health-fill {
+    -fx-background-color:
+        linear-gradient(to bottom, #e8a33d, #b8741a),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent 55%);
+}
+
+.health-bar:critical .health-fill {
+    -fx-background-color:
+        linear-gradient(to bottom, #e0443a, #9e1f17),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent 55%);
+}
+
+/* What was just lost: pale, then drains away */
+.health-trail {
+    -fx-background-color: rgba(255, 236, 200, 0.85);
+    -fx-background-radius: 0.3em;
+    -fx-background-insets: 1;
+}
+
+.health-segment {
+    -fx-border-color: transparent rgba(0, 0, 0, 0.55) transparent transparent;
+    -fx-border-width: 0 0.08em 0 0;
+}
+
+.health-segment.last {
+    -fx-border-width: 0;
+}
+
+.health-glow {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.3em;
+    -fx-effect: dropshadow(gaussian, #ff2a1a, 18, 0.55, 0, 0);
+    -fx-border-color: #ff2a1a;
+    -fx-border-radius: 0.3em;
+}
+
+.health-popup {
+    -fx-font-size: 1.3em;
+    -fx-effect: dropshadow(gaussian, black, 4, 0.8, 0, 0);
+}
+
+.health-popup.damage {
+    -fx-text-fill: #ff6b5b;
+}
+
+.health-popup.heal {
+    -fx-text-fill: #7ee08a;
+}
+
+/* Inventory */
+
+.inventory {
+    -fx-spacing: 0.35em;
+}
+
+.inventory-row {
+    -fx-spacing: 0.6em;
+}
+
+.inventory-section {
+    -fx-text-fill: -sh-text-muted;
+    -fx-font-size: 0.8em;
+    -fx-padding: 0.2em 0 0 0;
+    -fx-border-color: rgba(201, 168, 106, 0.25) transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.inventory-item {
+    -fx-spacing: 0.15em;
+}
+
+.inventory-item-name {
+    -fx-font-size: 0.72em;
+    -fx-text-fill: -sh-text-muted;
+}
+
+/* Frames have a fixed size: the item image is sized from them, so they mustn't grow */
+.inventory-slot,
+.equipment-slot {
+    -fx-background-color:
+        rgba(201, 168, 106, 0.55),
+        radial-gradient(center 50% 42%, radius 70%, #e9e0cc, #9c8f78 70%, #5e5345);
+    -fx-background-insets: 0, 0.08em;
+    -fx-background-radius: 0.4em, 0.34em;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.55), 10, 0.1, 0, 2);
+    -fx-padding: 0.15em;
+}
+
+.inventory-slot {
+    -fx-min-width: 4.3em;
+    -fx-pref-width: 4.3em;
+    -fx-max-width: 4.3em;
+    -fx-min-height: 4.3em;
+    -fx-pref-height: 4.3em;
+    -fx-max-height: 4.3em;
+}
+
+.equipment-slot {
+    -fx-min-width: 3em;
+    -fx-pref-width: 3em;
+    -fx-max-width: 3em;
+    -fx-min-height: 3em;
+    -fx-pref-height: 3em;
+    -fx-max-height: 3em;
+}
+
+/* Glassy highlight across the top of each frame */
+.inventory-shine {
+    -fx-background-color: linear-gradient(to bottom, rgba(255, 255, 255, 0.28), transparent 45%);
+    -fx-background-radius: 0.34em;
+}
+
+.inventory-badge {
+    -fx-background-color: #471212;
+    -fx-background-radius: 1em;
+    -fx-border-color: -sh-gold;
+    -fx-border-radius: 1em;
+    -fx-border-width: 0.06em;
+    -fx-text-fill: white;
+    -fx-font-size: 0.7em;
+    -fx-padding: 0 0.35em;
+    -fx-translate-x: 0.35em;
+    -fx-translate-y: -0.35em;
+}
+
+.inventory-item:empty .inventory-slot {
+    -fx-opacity: 0.35;
+}
+
+.inventory-item:empty .inventory-item-name {
+    -fx-opacity: 0.6;
+}
+
+.inventory-item:usable {
+    -fx-cursor: hand;
+}
+
+.inventory-item:usable:hover .inventory-slot {
+    -fx-background-color:
+        -sh-gold,
+        radial-gradient(center 50% 42%, radius 70%, #fff6e0, #b3a488 70%, #6b5f4f);
+}
+
+.inventory-flash {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 60%, rgba(255, 230, 160, 0.9), transparent);
+    -fx-background-radius: 0.34em;
+}
+
+.inventory-tooltip {
+    -fx-background-color: rgba(16, 12, 10, 0.95);
+    -fx-border-color: -sh-panel-border;
+    -fx-background-radius: 0.3em;
+    -fx-border-radius: 0.3em;
+    -fx-text-fill: -sh-text;
+    -fx-font-family: "Dungeon";
+    -fx-font-size: 16px;
+    -fx-padding: 0.4em 0.6em;
+}
+
+/* Floor, time and deaths */
+
+.stats {
+    -fx-min-width: 6.5em;
+}
+
+.stat-name {
+    -fx-text-fill: -sh-gold;
+    -fx-padding: 0 0.8em 0 0;
+}
+
+/* Map */
+
+.map-frame {
+    /* Matches the corner radius of the map clip in MapView */
+    -fx-border-color: -sh-panel-border;
+    -fx-border-radius: 10px;
+}
+
+.cheat-sheet-hint {
+    -fx-text-fill: white;
+    -fx-font-size: 0.9em;
+    -fx-effect: dropshadow(gaussian, black, 6, 0.7, 0, 0);
+}
+
+/* ---------- Console: message log, input, hints ---------- */
+
+.console {
+    -fx-background-color: -sh-panel;
+    -fx-background-radius: 0.5em;
+    -fx-border-color: -sh-panel-border;
+    -fx-border-radius: 0.5em;
+    -fx-padding: 0.3em 0.6em 0.25em 0.6em;
+    -fx-spacing: 0.2em;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.55), 14, 0.2, 0, 3);
+}
+
+.message-log,
+.message-log > .viewport {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 0;
+}
+
+.log-entries {
+    -fx-spacing: 0.15em;
+    -fx-padding: 0 0.3em 0 0;
+}
+
+.log-entry {
+    -fx-font-size: 1em;
+    -fx-text-fill: -sh-text-muted;
+}
+
+.log-command {
+    -fx-text-fill: rgba(201, 168, 106, 0.75);
+    -fx-font-size: 0.85em;
+}
+
+.log-latest {
+    -fx-text-fill: -sh-text;
+    -fx-font-size: 1.15em;
+}
+
+.message-log .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 0.3em;
+}
+
+.message-log .scroll-bar .thumb {
+    -fx-background-color: rgba(201, 168, 106, 0.4);
+    -fx-background-radius: 0.2em;
+}
+
+.message-log .scroll-bar .increment-button,
+.message-log .scroll-bar .decrement-button {
+    -fx-padding: 0;
+    -fx-shape: "";
+}
+
+.input-row {
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+    -fx-background-radius: 0.35em;
+    -fx-border-color: rgba(255, 255, 255, 0.12);
+    -fx-border-radius: 0.35em;
+    -fx-padding: 0 0.4em;
+    -fx-spacing: 0.3em;
+}
+
+.input-row:focus-within {
+    -fx-border-color: -sh-gold;
+}
+
+.prompt {
+    -fx-text-fill: -sh-gold;
+    -fx-font-size: 1.3em;
+}
+
+.command-input {
+    -fx-background-color: transparent;
+    -fx-text-fill: -sh-text;
+    -fx-prompt-text-fill: rgba(239, 230, 214, 0.4);
+    -fx-highlight-fill: -sh-button-hover;
+    -fx-highlight-text-fill: white;
+    -fx-font-size: 1.15em;
+    -fx-padding: 0.15em 0;
+}
+
+.hint {
+    -fx-text-fill: rgba(168, 159, 144, 0.75);
+    -fx-font-size: 0.65em;
+    -fx-alignment: center;
+}
+
+/* ---------- Effects ---------- */
+
+.damage-flash {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 75%, transparent 45%, rgba(170, 0, 0, 0.6));
+}
+
+.heal-flash {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 75%, transparent 50%, rgba(40, 170, 80, 0.45));
+}
+
+.death-screen {
+    -fx-background-color: rgba(10, 0, 0, 0.78);
+    -fx-alignment: center;
+    -fx-spacing: 0.3em;
+}
+
+.death-title {
+    -fx-text-fill: -sh-danger;
+    -fx-font-size: 4em;
+    -fx-effect: dropshadow(gaussian, black, 16, 0.5, 0, 0);
+}
+
+.death-subtitle {
+    -fx-text-fill: -sh-text-muted;
+    -fx-font-size: 1.2em;
+}
+
+.floor-banner {
+    -fx-text-fill: -sh-gold;
+    -fx-font-size: 2.2em;
+    -fx-padding: 1.5em 0 0 0;
+    -fx-effect: dropshadow(gaussian, black, 14, 0.6, 0, 0);
+}
+
+/* ---------- Pause menu ---------- */
+
+.pause-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.65);
+}
+
+.pause-panel {
+    -fx-background-color: -sh-panel;
+    -fx-background-radius: 0.6em;
+    -fx-border-color: -sh-panel-border;
+    -fx-border-radius: 0.6em;
+    -fx-padding: 1em 1.4em;
+    -fx-spacing: 0.5em;
+    -fx-alignment: center;
+    -fx-min-width: 12em;
+}
+
+.pause-title {
+    -fx-text-fill: -sh-gold;
+    -fx-font-size: 2.2em;
+    -fx-padding: 0 0 0.2em 0;
+}
+
+.menu-button.pause-button {
+    -fx-font-size: 1.2em;
+    -fx-padding: 0.25em 1em;
+}

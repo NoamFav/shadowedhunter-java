@@ -5,6 +5,7 @@ public class AudioManager {
     private static AudioManager instance;
     private MusicPlayer backgroundMusic;
     private MusicPlayer menuMusic;
+    private boolean muted;
 
     private AudioManager() {}
 
@@ -15,15 +16,17 @@ public class AudioManager {
         return instance;
     }
 
-    public void playBackgroundMusic(String path, float volume) {
+    public void playBackgroundMusic(String path, double volume) {
         stopBackgroundMusic();
         backgroundMusic = new MusicPlayer(path, volume);
+        backgroundMusic.setMuted(muted);
         backgroundMusic.play();
     }
 
-    public void playMenuMusic(String path, float volume) {
+    public void playMenuMusic(String path, double volume) {
         stopMenuMusic();
         menuMusic = new MusicPlayer(path, volume);
+        menuMusic.setMuted(muted);
         menuMusic.play();
     }
 
@@ -39,6 +42,16 @@ public class AudioManager {
             menuMusic.stop();
             menuMusic = null;
         }
+    }
+
+    public boolean isMuted() {
+        return muted;
+    }
+
+    public void setMuted(boolean muted) {
+        this.muted = muted;
+        if (backgroundMusic != null) backgroundMusic.setMuted(muted);
+        if (menuMusic != null) menuMusic.setMuted(muted);
     }
 
     public void stopAll() {

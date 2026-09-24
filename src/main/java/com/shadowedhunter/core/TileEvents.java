@@ -26,8 +26,6 @@ public final class TileEvents {
             // Marked first: a triggered trap stays triggered even if it kills the player
             trapTile.trigger();
             engine.displayMessage(Trap.forType(trapTile.getTrapType()).trigger(engine));
-            // Death or a hole may have moved the player
-            engine.syncIconToPlayerPosition();
             return true;
         }
 

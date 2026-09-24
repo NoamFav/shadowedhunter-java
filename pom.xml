@@ -11,6 +11,8 @@
 
     <properties>
         <main.class>com.shadowedhunter.Application</main.class>
+        <main.module>com.ShadowedHunter</main.module>
+        <javafx.version>23.0.2</javafx.version>
         <app.version>1.0.0</app.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>22</maven.compiler.source>
@@ -18,11 +20,16 @@
     </properties>
 
     <dependencies>
-        <!-- JLayer (MP3 support) -->
+        <!-- JavaFX (UI + MP3 playback) -->
         <dependency>
-            <groupId>javazoom</groupId>
-            <artifactId>jlayer</artifactId>
-            <version>1.0.1</version>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>${javafx.version}</version>
         </dependency>
 
         <!-- SLF4J API -->
@@ -43,7 +50,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.12</version>
+            <version>1.5.13</version>
         </dependency>
     </dependencies>
 
@@ -59,14 +66,14 @@
                     <target>22</target>
                 </configuration>
             </plugin>
+            <!-- JavaFX Maven Plugin: mvn javafx:run -->
             <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>3.1.0</version>
-              <configuration>
-                <mainClass>${main.class}</mainClass>
-                <classpathScope>runtime</classpathScope>
-              </configuration>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>${main.module}/${main.class}</mainClass>
+                </configuration>
             </plugin>
 
             <!-- Maven Dependency Plugin -->
@@ -148,7 +155,7 @@
                                 --main-jar "${project.build.finalName}.jar"
                                 --main-class "${main.class}"
                                 --module-path "${project.build.directory}/mods:${java.home}/jmods"
-                                --add-modules java.base,java.desktop,java.logging
+                                --add-modules java.base,java.desktop,java.logging,jdk.unsupported
                             </commandlineArgs>
                         </configuration>
                     </execution>

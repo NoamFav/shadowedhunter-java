@@ -24,7 +24,6 @@ public class JumpCommand implements Command {
 
         if (tile != null && tile.isWalkable()) {
             player.setPosition(newX, newY);
-            engine.moveIcon(direction, 2);
             engine.displayMessage("Jumping " + direction.getName());
             TileEvents.onEnter(engine);
             engine.refreshDisplay();

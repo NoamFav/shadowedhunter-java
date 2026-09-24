@@ -6,7 +6,9 @@ import com.shadowedhunter.input.commands.inventory.*;
 import com.shadowedhunter.input.commands.movement.*;
 import com.shadowedhunter.input.commands.system.*;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InputHandler {
@@ -79,7 +81,42 @@ public class InputHandler {
         if (command != null) {
             command.execute(engine);
         } else {
-            engine.displayMessage("Invalid input");
+            String suggestion = suggest(normalized);
+            engine.displayMessage(
+                    suggestion == null
+                            ? "Invalid input"
+                            : "Invalid input. Did you mean '" + suggestion + "'?");
         }
+    }
+
+    public List<String> getCommandNames() {
+        return commands.keySet().stream().sorted().toList();
+    }
+
+    // Closest known command to what was typed, if it's close enough to be a likely typo
+    private String suggest(String input) {
+        if (input.isEmpty()) return null;
+        return commands.keySet().stream()
+                .filter(name -> name.length() > 1) // single letters would match anything short
+                .min(Comparator.comparingInt(name -> editDistance(input, name)))
+                .filter(name -> editDistance(input, name) <= Math.max(2, name.length() / 4))
+                .orElse(null);
+    }
+
+    private static int editDistance(String a, String b) {
+        int[] previous = new int[b.length() + 1];
+        int[] current = new int[b.length() + 1];
+        for (int j = 0; j <= b.length(); j++) previous[j] = j;
+        for (int i = 1; i <= a.length(); i++) {
+            current[0] = i;
+            for (int j = 1; j <= b.length(); j++) {
+                int substitution = previous[j - 1] + (a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1);
+                current[j] = Math.min(substitution, Math.min(previous[j], current[j - 1]) + 1);
+            }
+            int[] swap = previous;
+            previous = current;
+            current = swap;
+        }
+        return previous[b.length()];
     }
 }

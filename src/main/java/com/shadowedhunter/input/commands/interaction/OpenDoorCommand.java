@@ -53,7 +53,6 @@ public class OpenDoorCommand implements Command {
         var player = engine.getGameState().getPlayer();
         player.move(direction);
         player.move(direction);
-        engine.moveIcon(direction, 2);
         TileEvents.onEnter(engine);
         engine.refreshDisplay();
     }
