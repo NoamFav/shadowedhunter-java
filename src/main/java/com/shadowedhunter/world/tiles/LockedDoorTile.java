@@ -18,9 +18,4 @@ public class LockedDoorTile extends Tile {
     public String getDescription() {
         return "There is a door";
     }
-
-    public void unlock() {
-        this.code = "d";
-        this.type = TileType.DOOR;
-    }
 }

@@ -1,6 +1,7 @@
 package com.shadowedhunter.input.commands.movement;
 
 import com.shadowedhunter.core.GameEngine;
+import com.shadowedhunter.core.TileEvents;
 import com.shadowedhunter.input.Command;
 import com.shadowedhunter.util.Direction;
 
@@ -21,10 +22,11 @@ public class JumpCommand implements Command {
 
         var tile = engine.getWorld().getCurrentFloor().getTile(newX, newY);
 
-        if (tile == null || tile.isWalkable()) {
+        if (tile != null && tile.isWalkable()) {
             player.setPosition(newX, newY);
             engine.moveIcon(direction, 2);
             engine.displayMessage("Jumping " + direction.getName());
+            TileEvents.onEnter(engine);
             engine.refreshDisplay();
         } else {
             engine.displayMessage("You can't jump there");

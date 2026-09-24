@@ -16,7 +16,8 @@ public class TrapTile extends Tile {
 
     @Override
     public boolean isWalkable() {
-        return trapType == TrapType.PORTCULLIS || triggered;
+        // Traps are hidden: the player walks onto them and finds out the hard way
+        return true;
     }
 
     @Override

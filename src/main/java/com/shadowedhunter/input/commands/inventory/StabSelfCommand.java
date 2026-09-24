@@ -23,8 +23,12 @@ public class StabSelfCommand implements Command {
             engine.getGameState().handleDeath();
             engine.refreshDisplay();
         } else {
-            engine.displayMessage("You stabbed yourself: -10HP");
+            boolean fatal = engine.getGameState().getHealth() <= 10;
             engine.getGameState().damagePlayer(10);
+            engine.displayMessage(
+                    fatal
+                            ? "You stabbed yourself one time too many. You died"
+                            : "You stabbed yourself: -10HP");
             engine.refreshDisplay();
         }
     }

@@ -33,17 +33,22 @@ public class GameState {
         stats.incrementDeaths();
         health = Constants.MAX_HEALTH;
         player.setPosition(Constants.START_X, Constants.START_Y);
+        // The start position only exists on the first floor
+        GameEngine.getInstance().getWorld().switchFloor(0);
 
         // sync icon
         GameEngine.getInstance().resetIconToStart();
     }
 
     public void setHealth(int health) {
-        this.health = Math.max(0, Math.min(100, health));
+        this.health = Math.max(0, Math.min(Constants.MAX_HEALTH, health));
     }
 
     public void damagePlayer(int damage) {
         setHealth(health - damage);
+        if (!isAlive()) {
+            handleDeath();
+        }
     }
 
     public void healPlayer(int amount) {

@@ -5,6 +5,7 @@ import com.shadowedhunter.input.Command;
 import com.shadowedhunter.inventory.ItemType;
 import com.shadowedhunter.util.Direction;
 import com.shadowedhunter.world.Tile;
+import com.shadowedhunter.world.tiles.DoorTile;
 import com.shadowedhunter.world.tiles.LockedDoorTile;
 
 public class UnlockDoorCommand implements Command {
@@ -24,10 +25,11 @@ public class UnlockDoorCommand implements Command {
 
         Tile tile = engine.getWorld().getCurrentFloor().getTile(doorX, doorY);
 
-        if (tile instanceof LockedDoorTile lockedDoor) {
+        if (tile instanceof LockedDoorTile) {
             if (inventory.hasItem(ItemType.KEY)) {
                 inventory.removeItem(ItemType.KEY);
-                lockedDoor.unlock();
+                // Becomes a plain door so it can be opened like any other
+                engine.getWorld().getCurrentFloor().setTile(doorX, doorY, new DoorTile(doorX, doorY));
                 engine.displayMessage("The " + direction.getName() + " door is now unlocked");
                 engine.refreshDisplay();
             } else {

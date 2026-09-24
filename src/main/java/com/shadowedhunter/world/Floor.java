@@ -32,6 +32,10 @@ public class Floor {
             String line;
             int y = 0;
             while ((line = br.readLine()) != null) {
+                // The map files are saved with a UTF-8 byte order mark
+                if (y == 0 && line.startsWith("\uFEFF")) {
+                    line = line.substring(1);
+                }
                 String[] values = line.split(";");
                 Tile[] row = new Tile[values.length];
                 for (int x = 0; x < values.length; x++) {
